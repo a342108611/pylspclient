@@ -110,14 +110,14 @@ class LspClient(object):
         return [lsp_structs.SymbolInformation(**sym) for sym in result_dict]
 
 
-    def definition(self, textDocument, position):
+    def references(self, textDocument, position, includeDeclaration=False):
         """
-        The goto definition request is sent from the client to the server to resolve the definition location of a symbol at a given text document position.
+        The goto references request is sent from the client to the server to resolve the references location of a symbol at a given text document position.
 
         :param TextDocumentItem textDocument: The text document.
         :param Position position: The position inside the text document.
         """
-        result_dict = self.lsp_endpoint.call_method("textDocument/definition", textDocument=textDocument, position=position)
+        result_dict = self.lsp_endpoint.call_method("textDocument/references", textDocument=textDocument, position=position, context={"includeDeclaration": includeDeclaration})
         return [lsp_structs.Location(**l) for l in result_dict]
 
 

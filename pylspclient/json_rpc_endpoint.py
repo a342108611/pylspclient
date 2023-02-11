@@ -91,4 +91,8 @@ class JsonRpcEndpoint(object):
                 raise lsp_structs.ResponseError(lsp_structs.ErrorCodes.ParseError, "Bad header: missing size")
 
             jsonrpc_res = self.stdout.read(message_size).decode("utf-8")
-            return json.loads(jsonrpc_res)
+            try:
+                return json.loads(jsonrpc_res)
+            except json.decoder.JSONDecodeError:
+                print("json 解析失败: {}".format(jsonrpc_res))
+                return None
