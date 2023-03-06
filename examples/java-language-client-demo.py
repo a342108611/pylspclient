@@ -171,7 +171,7 @@ if __name__ == "__main__":
     lsp_endpoint = pylspclient.LspEndpoint(json_rpc_endpoint,
                                            method_callbacks=method_callbacks,
                                            notify_callbacks=notify_callbacks,timeout=600)
-
+    lsp_endpoint.daemon = True
     lsp_client = pylspclient.LspClient(lsp_endpoint)
     capabilities = {
       'general': {
